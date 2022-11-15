@@ -5,6 +5,7 @@ interface Character {
 
 interface Features {
 	title: string,
+	type?: string,
 	description: string
 }
 
