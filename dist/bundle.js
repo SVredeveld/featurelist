@@ -7,13 +7,14 @@ var __webpack_exports__ = {};
 
 function newCharacter() {
     var _a;
-    var charaterInput = (_a = document.getElementById("characterName")) === null || _a === void 0 ? void 0 : _a.value;
-    if (charaterInput) {
-        window.localStorage.setItem(`${charaterInput}`, charaterInput);
+    var charaterInputValue = (_a = document.getElementById("characterName")) === null || _a === void 0 ? void 0 : _a.value;
+    let character = { id: crypto.randomUUID(), name: charaterInputValue };
+    if (charaterInputValue) {
+        window.localStorage.setItem(`${charaterInputValue}`, character.id);
     }
-    console.log(charaterInput);
+    getAllCharacters();
 }
-function createApp() {
+function createIndex() {
     const indexFile = document.getElementById("app");
     var characterInput = document.createElement('input');
     characterInput.id = 'characterName';
@@ -25,7 +26,17 @@ function createApp() {
         newCharacter();
     });
 }
-createApp();
+function getAllCharacters() {
+    Object.keys(localStorage).forEach(function (key, value) {
+        var characters = document.createElement('span');
+        characters.textContent = key.toString();
+        const indexFile = document.getElementById("app");
+        indexFile === null || indexFile === void 0 ? void 0 : indexFile.appendChild(characters);
+    });
+}
+;
+createIndex();
+getAllCharacters();
 
 /******/ })()
 ;

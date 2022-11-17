@@ -1,6 +1,7 @@
 interface Character {
-	name: string;
-	features: Features[]; 
+	id: string,
+	name: string,
+	features?: Features[] 
 }
 
 interface Features {
@@ -10,15 +11,17 @@ interface Features {
 }
 
 function newCharacter() {
-	var charaterInput = (<HTMLInputElement>document.getElementById("characterName"))?.value;
-	if(charaterInput) {
-		window.localStorage.setItem(`${charaterInput}`, charaterInput);
+	var charaterInputValue = (<HTMLInputElement>document.getElementById("characterName"))?.value;
+
+	let character: Character = { id : crypto.randomUUID(), name : charaterInputValue }; 
+	if(charaterInputValue) {
+		window.localStorage.setItem(`${charaterInputValue}`, character.id);
 		
 	}
-	console.log(charaterInput)
+	getAllCharacters()
 }
 
-function createApp() {
+function createIndex() {
 	const indexFile = document.getElementById("app");
 
 	var characterInput = document.createElement('input');
@@ -36,4 +39,16 @@ function createApp() {
 
 }
 
-createApp();
+function getAllCharacters() {
+	Object.keys(localStorage).forEach(function(key, value){
+		var characters = document.createElement('span');
+		characters.textContent = key.toString();
+		const indexFile = document.getElementById("app");
+	
+		indexFile?.appendChild(characters);
+	})
+};
+
+createIndex();
+getAllCharacters();
+
